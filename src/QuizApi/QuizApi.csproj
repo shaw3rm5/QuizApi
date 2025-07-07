@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,9 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\" />
-      <Folder Include="Features\" />
-      <Folder Include="Infrastructure\Database\Configurations\" />
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

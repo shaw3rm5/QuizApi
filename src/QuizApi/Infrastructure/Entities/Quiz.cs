@@ -22,8 +22,8 @@ public class Quiz
     
     public DateTimeOffset CreatedAt { get; private set; }
     
-    public ICollection<Question> Questions { get; private set; } = null!;
-    
+    public ICollection<Question> Questions { get; private set; }
+    public ICollection<Response> Responses { get; private set; }
     
     public static Quiz Create(
             Guid creatorId, string title, string? description,
@@ -44,7 +44,8 @@ public class Quiz
             EndsAt = endsAt,
             IsActive = true,
             CreatedAt = DateTimeOffset.UtcNow,
-            Questions = new List<Question>()
+            Questions = new List<Question>(),
+            Responses = new List<Response>()
         };
     }
     
