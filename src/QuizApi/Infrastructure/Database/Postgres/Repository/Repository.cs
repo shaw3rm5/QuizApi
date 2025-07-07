@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace QuizApi.Infrastructure.Database.Repository;
+namespace QuizApi.Infrastructure.Database.Postgres.Repository;
 
 public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : class

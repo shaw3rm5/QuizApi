@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace QuizApi.Infrastructure.Database.Repository;
+namespace QuizApi.Infrastructure.Database.Postgres.Repository;
 
 public interface IRepository<TEntity>
     where TEntity : class

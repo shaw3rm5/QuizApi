@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuizApi.Infrastructure.Database;
-using QuizApi.Infrastructure.Database.Repository;
+using QuizApi.Infrastructure.Database.Postgres.Repository;
 
 namespace QuizApi.Infrastructure;
 

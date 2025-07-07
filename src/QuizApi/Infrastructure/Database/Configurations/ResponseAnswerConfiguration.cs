@@ -22,16 +22,16 @@ public class ResponseAnswerConfiguration : IEntityTypeConfiguration<ResponseAnsw
         builder
             .Property(r => r.SelectedAnswerIds)
             .IsRequired()
-            .HasColumnType("uuid[]"); // массив UUID для PostgreSQL
+            .HasColumnType("uuid[]");
 
         builder
             .Property(r => r.TextAnswer)
-            .HasMaxLength(2000) // ограничение для текстового ответа
-            .IsRequired(false); // не обязателен, зависит от вопроса
+            .HasMaxLength(200) 
+            .IsRequired(false); 
 
         builder
             .Property(r => r.RatingValue)
-            .IsRequired(false); // только для rating
+            .IsRequired(); 
 
         builder
             .Property(r => r.AnsweredAt)
@@ -47,7 +47,7 @@ public class ResponseAnswerConfiguration : IEntityTypeConfiguration<ResponseAnsw
             .HasOne<Question>()
             .WithMany()
             .HasForeignKey(r => r.QuestionId)
-            .OnDelete(DeleteBehavior.Restrict); // не удаляем ответы при удалении вопроса
+            .OnDelete(DeleteBehavior.Restrict); 
 
     }
 }
