@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuizApi.Infrastructure.Entities;
+using QuizApi.Infrastructure.Models;
+using QuizApi.Infrastructure.Models.Entities;
 
 namespace QuizApi.Infrastructure.Database.Configurations;
 
@@ -8,13 +10,17 @@ public class QuizAnalyticConfiguration : IEntityTypeConfiguration<QuizAnalytic>
 {
     public void Configure(EntityTypeBuilder<QuizAnalytic> builder)
     {
+
         builder
             .HasKey(q => q.Id);
-
+        
+        builder
+            .HasIndex(q => q.QuizId)
+            .IsUnique();
         builder
             .Property(q => q.QuizId)
             .IsRequired();
-
+        
         builder
             .Property(q => q.TotalResponses)
             .IsRequired();
@@ -36,9 +42,5 @@ public class QuizAnalyticConfiguration : IEntityTypeConfiguration<QuizAnalytic>
             .WithOne()
             .HasForeignKey<QuizAnalytic>(q => q.QuizId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        builder
-            .HasIndex(q => q.QuizId)
-            .IsUnique();
     }
 }

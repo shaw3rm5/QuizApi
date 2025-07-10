@@ -3,13 +3,13 @@ volumes:
 
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17.3
     container_name: quiz_postgres
     restart: always
     environment:
-      POSTGRES_USER: quizuser
-      POSTGRES_PASSWORD: quizpass
-      POSTGRES_DB: quizdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: quizDb
     ports:
       - "5432:5432"
     volumes:

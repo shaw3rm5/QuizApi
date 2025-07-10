@@ -6,7 +6,6 @@ builder.Services.AddOpenApi();
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
 var app = builder.Build();
 
-
 app.MapOpenApi();
 app.UseHttpsRedirection();
 

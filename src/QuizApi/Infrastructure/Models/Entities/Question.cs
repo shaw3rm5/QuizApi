@@ -1,10 +1,9 @@
 using QuizApi.Infrastructure.Entities.Enums;
 
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class Question
+public class Question : BaseEntity
 {
-    public Guid Id { get; private set; }
     public Guid QuizId { get; private set; }
     public string QuestionText { get; private set; } = null!;
     public QuestionType Type { get; private set; }
@@ -18,12 +17,10 @@ public class Question
 
     public static Question Create(
             Guid quizId, string questionText, QuestionType type,
-            int orderIndex, bool isRequired, int timeLimitSeconds, string imageUrl
-        )
+            int orderIndex, bool isRequired, int timeLimitSeconds, string imageUrl)
     {
         return new Question
         {
-            Id = Guid.NewGuid(),
             QuizId = quizId,
             QuestionText = questionText,
             Type = type,

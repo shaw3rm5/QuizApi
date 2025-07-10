@@ -1,8 +1,7 @@
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class AnswerOption
-{
-    public Guid Id { get; private set; }
+public class AnswerOption : BaseEntity
+{ 
     public Guid QuestionId { get; private set; }
     public string OptionText { get; private set; }
     public int OrderIndex { get; private set; }
@@ -14,7 +13,6 @@ public class AnswerOption
     {
         return new AnswerOption
         {
-            Id = Guid.NewGuid(),
             QuestionId = questionId,
             OptionText = optionText,
             OrderIndex = orderIndex,

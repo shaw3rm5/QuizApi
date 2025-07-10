@@ -1,8 +1,7 @@
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class Response
+public class Response : BaseEntity
 {
-    public Guid Id { get; private set; }
     public Guid QuizId { get; private set; }
     public Guid? UserId { get; private set; }
     public Guid? SessionId { get; private set; } //for anon users
@@ -19,7 +18,6 @@ public class Response
     {
         return new Response
         {
-            Id = Guid.NewGuid(),
             QuizId = quizId,
             UserId = userId,
             SessionId = sessionId,

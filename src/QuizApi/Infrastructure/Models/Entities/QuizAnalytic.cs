@@ -1,8 +1,7 @@
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class QuizAnalytic
+public class QuizAnalytic : BaseEntity
 {
-    public Guid Id { get; private set; }
     public Guid QuizId { get; private set; }
     public int TotalResponses { get; private set; }
     public double AverageCompletionTime { get; private set; }
@@ -17,7 +16,6 @@ public class QuizAnalytic
     {
         return new QuizAnalytic
         {
-            Id = Guid.NewGuid(),
             QuizId = quizId,
             TotalResponses = totalResponses,
             AverageCompletionTime = averageCompletionTime,

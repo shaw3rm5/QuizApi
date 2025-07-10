@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuizApi.Infrastructure.Entities;
+using QuizApi.Infrastructure.Models;
+using QuizApi.Infrastructure.Models.Entities;
 
 namespace QuizApi.Infrastructure.Database.Configurations;
 

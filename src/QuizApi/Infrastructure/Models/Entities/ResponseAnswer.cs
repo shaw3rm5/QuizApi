@@ -1,8 +1,7 @@
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class ResponseAnswer
+public class ResponseAnswer : BaseEntity
 {
-    public Guid Id { get; private set; }
     public Guid ResponseId { get; private set; }
     public Guid QuestionId { get; private set; }
     public Guid[] SelectedAnswerIds { get; private set; } = null!;
@@ -19,7 +18,6 @@ public class ResponseAnswer
     {
         return new ResponseAnswer
         {
-            Id = Guid.NewGuid(),
             ResponseId = responseId,
             QuestionId = questionId,
             SelectedAnswerIds = selectedAnswerIds,

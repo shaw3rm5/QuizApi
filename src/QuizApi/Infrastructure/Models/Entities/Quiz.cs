@@ -1,11 +1,10 @@
 using QuizApi.Infrastructure.Entities.Enums;
 
-namespace QuizApi.Infrastructure.Entities;
+namespace QuizApi.Infrastructure.Models.Entities;
 
-public class Quiz
+public class Quiz : BaseEntity
 {
-    public Guid Id { get; private set; }
-    public Guid CreatorId { get; private set; }
+    public Guid AuthorId { get; private set; }
     
     public string Title { get; private set; } = null!;
     public string? Description { get; private set; }
@@ -25,6 +24,8 @@ public class Quiz
     public ICollection<Question> Questions { get; private set; }
     public ICollection<Response> Responses { get; private set; }
     
+    public User Author { get; set; } = null!;
+    
     public static Quiz Create(
             Guid creatorId, string title, string? description,
             QuizType type,  Visibility visibility, string accessCode, 
@@ -32,8 +33,7 @@ public class Quiz
     {
         return new Quiz
         {
-            Id = Guid.NewGuid(),
-            CreatorId = creatorId,
+            AuthorId = creatorId,
             Title = title,
             Description = description,
             Type = type,

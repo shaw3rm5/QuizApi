@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using QuizApi.Infrastructure.Configurations;
 using QuizApi.Infrastructure.Database;
 using QuizApi.Infrastructure.Database.Postgres.Repository;
 
@@ -10,11 +11,12 @@ public static class InfrastructureDependencies
     {
         // database
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options
                 .UseNpgsql(configuration.GetConnectionString("Postgres"))
-                .UseSnakeCaseNamingConvention();
+                .UseSnakeCaseNamingConvention(); 
         });
 
     }
