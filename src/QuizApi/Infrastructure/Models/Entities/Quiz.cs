@@ -13,10 +13,8 @@ public class Quiz : BaseEntity
     public Visibility Visibility { get; private set; }
     public string? AccessCode { get; private set; }
     public bool IsAnonymousAllowed { get; set; }
-    
-    public DateTimeOffset StartsAt { get; private init; }
-    public DateTimeOffset EndsAt { get; private init; }
-    public int DurationMinutes => EndsAt.TotalOffsetMinutes - StartsAt.TotalOffsetMinutes;
+
+    public int DurationMinutes { get; set; }
     public bool IsActive { get; private set; }
     
     public DateTimeOffset CreatedAt { get; private set; }
@@ -28,8 +26,8 @@ public class Quiz : BaseEntity
     
     public static Quiz Create(
             Guid creatorId, string title, string? description,
-            QuizType type,  Visibility visibility, string accessCode, 
-            bool isAnonymousAllowed, DateTimeOffset startsAt, DateTimeOffset endsAt)
+            QuizType type,  Visibility visibility, string? accessCode, 
+            bool isAnonymousAllowed, int durationMinutes)
     {
         return new Quiz
         {
@@ -39,9 +37,8 @@ public class Quiz : BaseEntity
             Type = type,
             Visibility = visibility,
             AccessCode = accessCode,
+            DurationMinutes = durationMinutes,
             IsAnonymousAllowed = isAnonymousAllowed,
-            StartsAt = startsAt,
-            EndsAt = endsAt,
             IsActive = true,
             CreatedAt = DateTimeOffset.UtcNow,
             Questions = new List<Question>(),

@@ -12,25 +12,44 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "user",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_name = table.Column<string>(type: "text", nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_user", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "quiz",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    creator_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    author_id = table.Column<Guid>(type: "uuid", nullable: false),
                     title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     type = table.Column<string>(type: "text", nullable: false),
                     visibility = table.Column<string>(type: "text", nullable: false),
                     access_code = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     is_anonymous_allowed = table.Column<bool>(type: "boolean", nullable: false),
-                    starts_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    ends_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    duration_minutes = table.Column<int>(type: "integer", nullable: false),
                     is_active = table.Column<bool>(type: "boolean", nullable: false),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_quiz", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_quiz_user_author_id",
+                        column: x => x.author_id,
+                        principalTable: "user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,6 +208,11 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                 column: "quiz_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_quiz_author_id",
+                table: "quiz",
+                column: "author_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_quiz_analytic_quiz_id",
                 table: "quiz_analytic",
                 column: "quiz_id",
@@ -218,6 +242,11 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                 name: "ix_response_answer_response_id1",
                 table: "response_answer",
                 column: "response_id1");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_user_user_name",
+                table: "user",
+                column: "user_name");
         }
 
         /// <inheritdoc />
@@ -240,6 +269,9 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
 
             migrationBuilder.DropTable(
                 name: "quiz");
+
+            migrationBuilder.DropTable(
+                name: "user");
         }
     }
 }

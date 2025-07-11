@@ -1,10 +1,11 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using QuizApi.Infrastructure.Models;
 
 namespace QuizApi.Infrastructure.Database.Postgres.Repository;
 
 public class Repository<TEntity> : IRepository<TEntity>
-    where TEntity : class
+    where TEntity : BaseEntity
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly DbSet<TEntity> _dbSet;

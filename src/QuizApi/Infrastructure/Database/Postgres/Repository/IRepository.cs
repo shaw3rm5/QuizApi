@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
+using QuizApi.Infrastructure.Models;
 
 namespace QuizApi.Infrastructure.Database.Postgres.Repository;
 
 public interface IRepository<TEntity>
-    where TEntity : class
+    where TEntity : BaseEntity
 {
     public Task AddAsync(TEntity entity, CancellationToken cancellationToken);
     

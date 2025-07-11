@@ -22,7 +22,7 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.AnswerOption", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.AnswerOption", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.ToTable("answer_option", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Question", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +112,7 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.ToTable("question", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Quiz", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Quiz", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,22 +124,22 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("access_code");
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("author_id");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("creator_id");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)")
                         .HasColumnName("description");
 
-                    b.Property<DateTimeOffset>("EndsAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("ends_at");
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("integer")
+                        .HasColumnName("duration_minutes");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
@@ -148,10 +148,6 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Property<bool>("IsAnonymousAllowed")
                         .HasColumnType("boolean")
                         .HasColumnName("is_anonymous_allowed");
-
-                    b.Property<DateTimeOffset>("StartsAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("starts_at");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -172,10 +168,13 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.HasKey("Id")
                         .HasName("pk_quiz");
 
+                    b.HasIndex("AuthorId")
+                        .HasDatabaseName("ix_quiz_author_id");
+
                     b.ToTable("quiz", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.QuizAnalytic", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.QuizAnalytic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,7 +211,7 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.ToTable("quiz_analytic", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Response", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Response", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,7 +253,7 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.ToTable("response", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.ResponseAnswer", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.ResponseAnswer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,16 +312,47 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.ToTable("response_answer", (string)null);
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.AnswerOption", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.User", b =>
                 {
-                    b.HasOne("QuizApi.Infrastructure.Entities.Question", null)
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.HasIndex("UserName")
+                        .HasDatabaseName("ix_user_user_name");
+
+                    b.ToTable("user", (string)null);
+                });
+
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.AnswerOption", b =>
+                {
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Question", null)
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_answer_option_question_question_id");
 
-                    b.HasOne("QuizApi.Infrastructure.Entities.Question", "Question")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Question", "Question")
                         .WithMany("AnswerOptions")
                         .HasForeignKey("QuestionId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,9 +362,9 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Question", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Question", b =>
                 {
-                    b.HasOne("QuizApi.Infrastructure.Entities.Quiz", "Quiz")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Quiz", "Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,11 +374,23 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.QuizAnalytic", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Quiz", b =>
                 {
-                    b.HasOne("QuizApi.Infrastructure.Entities.Quiz", "Quiz")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.User", "Author")
+                        .WithMany("Quizzes")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_quiz_user_author_id");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.QuizAnalytic", b =>
+                {
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Quiz", "Quiz")
                         .WithOne()
-                        .HasForeignKey("QuizApi.Infrastructure.Entities.QuizAnalytic", "QuizId")
+                        .HasForeignKey("QuizApi.Infrastructure.Models.Entities.QuizAnalytic", "QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_quiz_analytic_quiz_quiz_id");
@@ -356,9 +398,9 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Response", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Response", b =>
                 {
-                    b.HasOne("QuizApi.Infrastructure.Entities.Quiz", "Quiz")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Quiz", "Quiz")
                         .WithMany("Responses")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -368,30 +410,30 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.ResponseAnswer", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.ResponseAnswer", b =>
                 {
-                    b.HasOne("QuizApi.Infrastructure.Entities.Question", null)
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Question", null)
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_response_answer_question_question_id");
 
-                    b.HasOne("QuizApi.Infrastructure.Entities.Question", "Question")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_response_answer_question_question_id1");
 
-                    b.HasOne("QuizApi.Infrastructure.Entities.Response", null)
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Response", null)
                         .WithMany("Answers")
                         .HasForeignKey("ResponseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_response_answer_response_response_id");
 
-                    b.HasOne("QuizApi.Infrastructure.Entities.Response", "Response")
+                    b.HasOne("QuizApi.Infrastructure.Models.Entities.Response", "Response")
                         .WithMany()
                         .HasForeignKey("ResponseId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -403,21 +445,26 @@ namespace QuizApi.Infrastructure.Database.Postgres.Migrations
                     b.Navigation("Response");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Question", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Question", b =>
                 {
                     b.Navigation("AnswerOptions");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Quiz", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Quiz", b =>
                 {
                     b.Navigation("Questions");
 
                     b.Navigation("Responses");
                 });
 
-            modelBuilder.Entity("QuizApi.Infrastructure.Entities.Response", b =>
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.Response", b =>
                 {
                     b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("QuizApi.Infrastructure.Models.Entities.User", b =>
+                {
+                    b.Navigation("Quizzes");
                 });
 #pragma warning restore 612, 618
         }

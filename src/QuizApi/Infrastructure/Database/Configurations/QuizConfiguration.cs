@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuizApi.Infrastructure.Models;
 using QuizApi.Infrastructure.Models.Entities;
-
+using QuizApi.Infrastructure.Database.Constants;
 namespace QuizApi.Infrastructure.Database.Configurations;
 
 public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
@@ -12,15 +12,17 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
     {
         builder
             .HasKey(q => q.Id);
-
+        builder
+            .HasIndex(q => q.Title);
+        
         builder
             .Property(q => q.Title)
             .IsRequired()
-            .HasMaxLength(200);
-
+            .HasMaxLength(QuizConstants.TITLE_MAX_LENGTH);
+        
         builder
             .Property(q => q.Description)
-            .HasMaxLength(1000);
+            .HasMaxLength(QuizConstants.DESCRIPTION_MAX_LENGTH);
 
         builder
             .Property(q => q.Type)
@@ -34,20 +36,16 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
 
         builder
             .Property(q => q.AccessCode)
-            .HasMaxLength(100);
+            .HasMaxLength(QuizConstants.ACCESCODE_MAX_LENGTH);
 
         builder
             .Property(q => q.IsAnonymousAllowed)
             .IsRequired();
 
         builder
-            .Property(q => q.StartsAt)
+            .Property(q => q.DurationMinutes)
             .IsRequired();
-
-        builder
-            .Property(q => q.EndsAt)
-            .IsRequired();
-
+        
         builder
             .Property(q => q.IsActive)
             .IsRequired();
@@ -55,7 +53,7 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
         builder
             .Property(q => q.CreatedAt)
             .IsRequired();
-
+        
         builder
             .HasMany(q => q.Questions)
             .WithOne(qst => qst.Quiz)
