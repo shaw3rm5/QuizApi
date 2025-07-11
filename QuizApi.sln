@@ -1,12 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApi", "src\QuizApi\QuizApi.csproj", "{5D0ABDD5-7C20-4B28-9EAB-18579B7D7FEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApi.API", "src\QuizApi.API\QuizApi.API.csproj", "{5D0ABDD5-7C20-4B28-9EAB-18579B7D7FEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02CBA71C-1196-42D1-B44F-C75C1591075F}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApi.Infrastructure", "src\QuizApi.Infrastructure\QuizApi.Infrastructure.csproj", "{698D2514-B8F4-48B9-BB7D-4D0F843F0604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApi.Application", "src\QuizApi.Application\QuizApi.Application.csproj", "{9BBF7141-772C-4652-8508-0ED3CE1A65B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{5D0ABDD5-7C20-4B28-9EAB-18579B7D7FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D0ABDD5-7C20-4B28-9EAB-18579B7D7FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D0ABDD5-7C20-4B28-9EAB-18579B7D7FEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698D2514-B8F4-48B9-BB7D-4D0F843F0604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698D2514-B8F4-48B9-BB7D-4D0F843F0604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698D2514-B8F4-48B9-BB7D-4D0F843F0604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698D2514-B8F4-48B9-BB7D-4D0F843F0604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BBF7141-772C-4652-8508-0ED3CE1A65B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BBF7141-772C-4652-8508-0ED3CE1A65B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BBF7141-772C-4652-8508-0ED3CE1A65B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BBF7141-772C-4652-8508-0ED3CE1A65B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
