@@ -15,4 +15,6 @@ public interface IRepository<TEntity>
     public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
     
     public IQueryable<TEntity> AsQueryable();   
+    
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

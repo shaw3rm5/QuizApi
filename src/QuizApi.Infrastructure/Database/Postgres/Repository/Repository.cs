@@ -26,7 +26,6 @@ public class Repository<TEntity> : IRepository<TEntity>
     {
         ArgumentNullException.ThrowIfNull(entity);
         _dbContext.Update(entity);
-        await SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(TEntity[] entities, CancellationToken cancellationToken)
@@ -36,7 +35,6 @@ public class Repository<TEntity> : IRepository<TEntity>
         {
             _dbContext.RemoveRange(entity);
         }
-        await SaveChangesAsync(cancellationToken);
     }
 
     public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
@@ -49,8 +47,8 @@ public class Repository<TEntity> : IRepository<TEntity>
         return _dbSet.AsQueryable<TEntity>();;
     }
     
-    private async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
-        return await  _dbContext.SaveChangesAsync(cancellationToken);
+        return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

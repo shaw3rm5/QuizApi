@@ -1,4 +1,4 @@
-namespace QuizApi.Infrastructure.Exceptions;
+namespace QuizApi.Application.Exceptions;
 
 public enum ErrorCodes
 {

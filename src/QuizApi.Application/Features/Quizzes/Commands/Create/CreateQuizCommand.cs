@@ -4,7 +4,7 @@ using QuizApi.Infrastructure.Models.Enums;
 namespace QuizApi.Application.Features.Quizzes.Commands.Create;
 
 public record CreateQuizCommand (
-        Guid CreatorId, 
+        Guid AuthorId, 
         string Title,
         string? Description,
         QuizType QuizType,

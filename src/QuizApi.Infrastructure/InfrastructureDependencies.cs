@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QuizApi.Infrastructure.Configurations;
 using QuizApi.Infrastructure.Database;
 using QuizApi.Infrastructure.Database.Postgres.Repository;
 
@@ -16,7 +17,7 @@ public static class InfrastructureDependencies
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options
-                .UseNpgsql(configuration.GetConnectionString("Postgres"))
+                .UseNpgsql(configuration.GetConnectionString(nameof(Postgres)))
                 .UseSnakeCaseNamingConvention(); 
         });
 
