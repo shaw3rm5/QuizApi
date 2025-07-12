@@ -1,7 +1,7 @@
 namespace QuizApi.Application.Exceptions;
 
-public class UserNotFoundException : ApplicationException
+public class UserNotFoundLayerException : ApplicationLayerException
 {
-    public UserNotFoundException(Guid userId)
+    public UserNotFoundLayerException(Guid userId)
         : base(ErrorCodes.BadRequest, $"user with ID {userId} was not found.") { }
 }

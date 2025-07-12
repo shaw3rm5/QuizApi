@@ -36,10 +36,10 @@ public class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Guid>
             .SingleOrDefaultAsync(cancellationToken);
 
         if (user is null)
-            throw new UserNotFoundException(request.AuthorId);
+            throw new UserNotFoundLayerException(request.AuthorId);
 
         if (existQuiz is not null)
-            throw new QuizAlreadyExistsException(request.Title);
+            throw new QuizAlreadyExistsLayerException(request.Title);
         
         var quiz = Quiz.Create(
             request.AuthorId,
